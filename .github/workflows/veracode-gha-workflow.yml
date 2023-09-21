@@ -1,0 +1,29 @@
+name: Pipeline scan and Issue importer
+
+on: [push, pull_request, workflow_dispatch]
+#on: gollum          # sort of a dummy to prevent this from running
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+        with:
+          path: nodegoat
+
+      - name: package (zip)
+        run: zip -r upload.zip nodegoat -x *node_modules/* *.git/*
+
+      - name: save archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: scan-target
+          path: upload.zip
+
+  pipeline-scan:
+    needs: package
+    runs-on: ubuntu-latest
+    container: 
+      image: veracode/pipeline-scan:latest
+      options: --user root
