@@ -1,7 +1,6 @@
 name: Node.js Veracode Upload & Scan
 
 on:
-  workflow_dispatch:
   push:
   #  branches: [ master ]
   pull_request:
@@ -12,11 +11,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        # node-version: [12.x, 14.x, 16.x]
-        node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+#    strategy:
+#      matrix:
+#        # node-version: [12.x, 14.x, 16.x]
+#       node-version: [16.x]
+#       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
